@@ -26,6 +26,7 @@ def to_base_form(node):
 class RichWord:
     def __init__(self, word, index, doc_id="", feature="", digested=None):
         self.word = word
+        self.surface = word
         self.index = index
         self.doc_id = doc_id
         self.feature = feature
@@ -47,7 +48,16 @@ class RichWord:
     def __eq__(self, rhs):
         if not rhs:
             return False
-        return self.word == rhs.word
+        return self.word == getattr(rhs, "word", rhs)
+
+    def __ne__(self, rhs):
+        return self.word != getattr(rhs, "word", rhs)
+
+    def __lt__(self, rhs):
+        return self.word < getattr(rhs, "word", rhs)
+
+    def __gt__(self, rhs):
+        return self.word > getattr(rhs, "word", rhs)
 
     def __hash__(self):
         return hash(self.digest)
