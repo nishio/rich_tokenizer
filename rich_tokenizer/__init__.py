@@ -98,6 +98,18 @@ def concat_tokens(xs, sep=""):
     return sep.join(map(str, xs)).strip()
 
 
+def to_str(t):
+    return getattr(t, "word", str(t))
+
+
+def grammer(t):
+    xs = t.split(",")
+    xs = xs[:-3]
+    x = "".join(xs)
+    x = x.replace("*", "")
+    return x
+
+
 def _test():
     import doctest
     doctest.testmod()
